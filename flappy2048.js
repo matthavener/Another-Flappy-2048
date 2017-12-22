@@ -185,7 +185,7 @@ var loadGameSound = function (n, chc) { // file name, channel count
 var game_loaded = false;
 var gameLoaded = function () {
  game.div.appendChild(game.bg);
- game.div.appendChild(ground.canvas);
+// game.div.appendChild(ground.canvas);
  game.div.appendChild(logo.img);
  game.div.appendChild(gameover.img);
  document.body.appendChild(playagain.img);
@@ -1203,15 +1203,16 @@ var oef = function () {
     div.style.oTransform      = 'rotate('+deg+'deg) scale('+sc+','+sc+')';
     div.style.transform       = 'rotate('+deg+'deg) scale('+sc+','+sc+')';
 
-    var mxy = hh - 88 - (cell_size + 12*2);
+    var mxy = hh - 0 - (cell_size + 12*2);
     
-    if (bird.y > mxy) {
+/*    if (bird.y > mxy) {
      if (!gclm) {
       punch.play();
       bird.vy = -10;
       game.ended = true;
      }
     }
+    */
     
     if (game.ended) { // •••• you have to implement this. when the game is over, this is set to true.
      game.end_fr = 0;
@@ -1252,7 +1253,7 @@ var oef = function () {
   div.style.transform       = 'rotate(0deg) scale(1,1)';
   bird.vy += .55;
   bird.y += bird.vy;
-  var mxy = hh - 88 - (cell_size + 12*2);
+  var mxy = hh - 0 - (cell_size + 12*2);
   if (bird.y > mxy) {
    bird.y = mxy;
   }
