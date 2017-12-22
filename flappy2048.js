@@ -501,7 +501,9 @@ parody.div.style.zIndex = 87654;
 
 
 var points = 0;
-var highscore = parseInt(localStorage.getItem('f2048hi')) | 0;
+var highscore = 0;
+try { highscore = parseInt(localStorage.getItem('f2048hi')); }
+catch (e) {}
 
 
 var scpts = [];
@@ -581,7 +583,7 @@ ground.bit = loadGameImage('ground.png');
 
 
 
-var vstrs = ['1'];
+var vstrs = ['1', '2', '3', '6', '12'];
 var getValueStr = function (num) {
  while (vstrs.length <= num) {
   var s = vstrs[vstrs.length - 1];
@@ -1135,7 +1137,9 @@ var oef = function () {
           points += 1;
           if (points > highscore) {
            highscore = points;
-           localStorage.setItem('f2048hi', highscore);
+           try {
+             localStorage.setItem('f2048hi', highscore);
+           } catch (e) {}
           }
           score.update();
          }
@@ -1222,7 +1226,9 @@ var oef = function () {
      playagain.showing = true;
      if (points > highscore) {
       highscore = points;
-      localStorage.setItem('f2048hi', highscore);
+      try {
+        localStorage.setItem('f2048hi', highscore);
+      } catch (e) {}
      }
     }
    }
