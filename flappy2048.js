@@ -1080,6 +1080,8 @@ var oef = function () {
        var gg = parseInt(c.substr(2, 2), 16);
        var bb = parseInt(c.substr(4, 2), 16);
        clc.clfr += flrt;
+       // matt 
+       bird.div.style.width = clc.ww+'px';
        var amt = Math.sin(clc.clfr/2)*32*flamt;
        rr += amt;
        gg += amt;
