@@ -3,6 +3,7 @@ document.body.style.margin = '0px';
 document.body.style.overflow = 'hidden';
 
 
+var starting_score = 40;
 var raf = function (x) { window.setTimeout(x, 1000 / 60); }
 if (window.requestAnimationFrame) raf = window.requestAnimationFrame;       // Firefox 23 / IE 10 / Chrome / Safari 7 (incl. iOS)
 else if (window.mozRequestAnimationFrame) raf = window.mozRequestAnimationFrame;    // Firefox < 23
@@ -219,7 +220,7 @@ var gameLoaded = function () {
   }
  }
  
- bird.setValue(1);
+ bird.setValue(starting_score);
  
 }
 
@@ -252,11 +253,15 @@ var doFlap = function () {
   
   bird.stuck_on_bottom = false;
   bird.stuck_on_top = false;
-  bird.setValue(1);
+  bird.setValue(starting_score);
   bird.dsz = 0;
-  bird.ww = cell_size;// + 150;
+  if (starting_score > 10) {
+    bird.ww = 242; // cell_size;// + 150;
+  } else {
+    bird.ww = cell_size;
+  }
   bird.div.style.width = bird.ww+'px';
-  game.cur_wall_val = 1; // 1;
+  game.cur_wall_val = starting_score; // 1;
   game.started = true;
   wall_fr_gap = wall_fr_start_gap;
   bird.reset();
@@ -583,7 +588,7 @@ ground.bit = loadGameImage('ground.png');
 
 
 
-var vstrs = ['1', '2', '3', '6', '12'];
+var vstrs = ['1'];
 var getValueStr = function (num) {
  while (vstrs.length <= num) {
   var s = vstrs[vstrs.length - 1];
