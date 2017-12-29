@@ -3,7 +3,8 @@ document.body.style.margin = '0px';
 document.body.style.overflow = 'hidden';
 
 
-var starting_score = 40;
+var starting_power = 10;
+var starting_score = starting_power + 1;
 var raf = function (x) { window.setTimeout(x, 1000 / 60); }
 if (window.requestAnimationFrame) raf = window.requestAnimationFrame;       // Firefox 23 / IE 10 / Chrome / Safari 7 (incl. iOS)
 else if (window.mozRequestAnimationFrame) raf = window.mozRequestAnimationFrame;    // Firefox < 23
@@ -255,11 +256,7 @@ var doFlap = function () {
   bird.stuck_on_top = false;
   bird.setValue(starting_score);
   bird.dsz = 0;
-  if (starting_score > 10) {
-    bird.ww = 242; // cell_size;// + 150;
-  } else {
-    bird.ww = cell_size;
-  }
+  bird.ww = cell_size;
   bird.div.style.width = bird.ww+'px';
   game.cur_wall_val = starting_score; // 1;
   game.started = true;
@@ -821,7 +818,7 @@ var newWall = function (wall_val) {
   }
  }
  
- wall.vspeed = (wall_val/11 - 1) * .66;
+ wall.vspeed = 0; // (wall_val/11 - 1) * .66;
  if (wall.vspeed > 1.5) wall.vspeed = 1.5;
  if (wall.vspeed < 0) wall.vspeed = 0;
  wall.dir = (wall_val%2 == 0)?(1):(-1);
@@ -1023,6 +1020,10 @@ var oef = function () {
       wall.kill();
      }
     }
+    if (walls.length > 0) {
+    //  console.log("setting width " + walls[0].cells[0].div.style.width);
+      bird.div.style.width = walls[0].cells[0].div.style.width;
+    }
     bird.x += (150 - bird.x) * .9;//bird.vx;
     bird.y += Math.max(-8, Math.min(13, bird.vy));
     bird.ang += (bird.dang - bird.ang) * .3;
@@ -1085,8 +1086,6 @@ var oef = function () {
        var gg = parseInt(c.substr(2, 2), 16);
        var bb = parseInt(c.substr(4, 2), 16);
        clc.clfr += flrt;
-       // matt 
-       bird.div.style.width = clc.ww+'px';
        var amt = Math.sin(clc.clfr/2)*32*flamt;
        rr += amt;
        gg += amt;
