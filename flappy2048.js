@@ -3,7 +3,8 @@ document.body.style.margin = '0px';
 document.body.style.overflow = 'hidden';
 
 
-var starting_power = 10;
+var multiplier = 100;
+var starting_power = 0;
 var starting_score = starting_power + 1;
 var raf = function (x) { window.setTimeout(x, 1000 / 60); }
 if (window.requestAnimationFrame) raf = window.requestAnimationFrame;       // Firefox 23 / IE 10 / Chrome / Safari 7 (incl. iOS)
@@ -567,7 +568,7 @@ for (var i = 0; i<scpts.length; i++) {
 }
 score.update = function () {
  for (var i = score.divs.length-1; i>=0; i--) {
-  score.divs[i].innerHTML = points + ' / ' + highscore;
+  score.divs[i].innerHTML = (starting_power + points) * multiplier + ' / ' + (starting_power + highscore) * multiplier;
  }
 }
 
@@ -999,7 +1000,8 @@ var oef = function () {
     if (wgfr == 10) { // fr%150
      var wall = newWall(game.cur_wall_val);
      wall_fr_gap = Math.max(wall_fr_gap, wall_fr_start_gap + Math.floor(.5*Math.ceil(wall.ww - cell_size)));
-     game.cur_wall_val++;
+//     game.cur_wall_val++;
+     game.cur_wall_val += multiplier;
     }
     for (var i = walls.length-1; i>=0; i--) {
      var wall = walls[i];
@@ -1054,7 +1056,7 @@ var oef = function () {
           for (var j = cells.length-1; j>=0; j--) {
            var cell = cells[j];
            var dy = Math.abs(cell.y - bird.y);
-           if (dy < cly) {
+           if (dy < cly && cell.value == dest_value) {
             cly = dy;
             clc = cell;
             wall.clc = clc;
@@ -1075,7 +1077,6 @@ var oef = function () {
           clm = false;
           flamt = .4;
           flrt = .4;
-          break;
          }
         }
        }
@@ -1132,7 +1133,7 @@ var oef = function () {
         } else if (bird.x > (clc.x + 16)) {
          wall.passed = true;
          if (!doubling) {
-          bird.setValue(bird.value + 1);
+          bird.setValue(bird.value + multiplier); // from +1
           bird.stuck_on_bottom = false;
           bird.stuck_on_top = false;
           bird.ww = clc.ww;
