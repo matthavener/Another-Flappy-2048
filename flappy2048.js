@@ -3,7 +3,7 @@ document.body.style.margin = '0px';
 document.body.style.overflow = 'hidden';
 
 
-var multiplier = 100;
+var multiplier = 1;
 var starting_power = 0;
 var starting_score = starting_power + 1;
 var raf = function (x) { window.setTimeout(x, 1000 / 60); }
@@ -586,7 +586,8 @@ ground.bit = loadGameImage('ground.png');
 
 
 
-var vstrs = ['1'];
+// render
+var vstrs = ['3'];
 var getValueStr = function (num) {
  while (vstrs.length <= num) {
   var s = vstrs[vstrs.length - 1];
@@ -1056,7 +1057,7 @@ var oef = function () {
           for (var j = cells.length-1; j>=0; j--) {
            var cell = cells[j];
            var dy = Math.abs(cell.y - bird.y);
-           if (dy < cly && cell.value == dest_value) {
+           if (dy < cly) { // no death && cell.value == dest_value) {
             cly = dy;
             clc = cell;
             wall.clc = clc;
@@ -1077,6 +1078,7 @@ var oef = function () {
           clm = false;
           flamt = .4;
           flrt = .4;
+           break; // remove for no death
          }
         }
        }
