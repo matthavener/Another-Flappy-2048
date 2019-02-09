@@ -4,7 +4,7 @@ document.body.style.overflow = 'hidden';
 
 
 var multiplier = 1;
-var starting_power = 0;
+var starting_power = 100;
 var starting_score = starting_power + 1;
 var raf = function (x) { window.setTimeout(x, 1000 / 60); }
 if (window.requestAnimationFrame) raf = window.requestAnimationFrame;       // Firefox 23 / IE 10 / Chrome / Safari 7 (incl. iOS)
@@ -587,7 +587,7 @@ ground.bit = loadGameImage('ground.png');
 
 
 // render
-var vstrs = ['3'];
+var vstrs = ['100'];
 var getValueStr = function (num) {
  while (vstrs.length <= num) {
   var s = vstrs[vstrs.length - 1];
