@@ -1024,8 +1024,9 @@ var oef = function () {
      }
     }
     if (walls.length > 0) {
-    //  console.log("setting width " + walls[0].cells[0].div.style.width);
+      console.log("setting width " + walls[0].cells[0].div.style.width);
       bird.div.style.width = walls[0].cells[0].div.style.width;
+      bird.ww = walls[0].cells[0].ww;
     }
     bird.x += (150 - bird.x) * .9;//bird.vx;
     bird.y += Math.max(-8, Math.min(13, bird.vy));
