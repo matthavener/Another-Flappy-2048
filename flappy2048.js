@@ -188,7 +188,7 @@ var loadGameSound = function (n, chc) { // file name, channel count
 var game_loaded = false;
 var gameLoaded = function () {
  game.div.appendChild(game.bg);
-// game.div.appendChild(ground.canvas);
+ game.div.appendChild(ground.canvas);
  game.div.appendChild(logo.img);
  game.div.appendChild(gameover.img);
  document.body.appendChild(playagain.img);
@@ -587,7 +587,7 @@ ground.bit = loadGameImage('ground.png');
 
 
 // render
-var vstrs = ['100'];
+var vstrs = ['1'];
 var getValueStr = function (num) {
  while (vstrs.length <= num) {
   var s = vstrs[vstrs.length - 1];
@@ -820,7 +820,7 @@ var newWall = function (wall_val) {
   }
  }
  
- wall.vspeed = 0; // (wall_val/11 - 1) * .66;
+ wall.vspeed = (wall_val/11 - 1) * .66; // vertical movement
  if (wall.vspeed > 1.5) wall.vspeed = 1.5;
  if (wall.vspeed < 0) wall.vspeed = 0;
  wall.dir = (wall_val%2 == 0)?(1):(-1);
