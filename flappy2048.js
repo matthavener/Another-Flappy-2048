@@ -5,6 +5,7 @@ document.body.style.overflow = 'hidden';
 
 var multiplier = 1;
 var starting_power = 0;
+var no_death = true;
 var starting_score = starting_power + 1;
 var raf = function (x) { window.setTimeout(x, 1000 / 60); }
 if (window.requestAnimationFrame) raf = window.requestAnimationFrame;       // Firefox 23 / IE 10 / Chrome / Safari 7 (incl. iOS)
@@ -587,7 +588,7 @@ ground.bit = loadGameImage('ground.png');
 
 
 // render
-var vstrs = ['1', '2', '3'];
+var vstrs = ['1', '2'];
 var getValueStr = function (num) {
  while (vstrs.length <= num) {
   var s = vstrs[vstrs.length - 1];
@@ -610,6 +611,37 @@ var getValueStr = function (num) {
  return vstrs[num-1];
 }
 
+
+// chinese colors
+
+var text_colors = ['ffffff', '606060', '606060', 'ffffff'];
+var tile_colors = ['edbf6f', // 1
+                   'eae8e4', // 2
+                   'ede0c8', // 4
+                   'f2b179', // 8
+                   'f59563', // 16
+                   'f67c5f', // 32
+                   'f65e3b', // 64
+                   'edcf72', // 128
+                   'edcc61', // 256
+                   '606060', // 512
+                   '5A667B',  // 1024
+                   'ECBF71', // 2048
+                   'EFE7DE'
+                    ];
+var tile_colors_2 = [
+                   'ede0c8', // 4
+                   'f2b179', // 8
+                   'f59563', // 16
+                   'f67c5f', // 32
+                   'f65e3b', // 64
+                   'edcf72', // 128
+                   'edcc61', // 256
+                   '606060', // 512
+                   '5A667B',  // 1024
+                   'ECBF71', // 2048
+                   'EFE7DE'
+];
 
 var text_colors = ['606060', '606060', '606060', 'ffffff'];
 var tile_colors = ['eeeeee', 'eae8e4', 'ede0c8', 'f2b179', 'f59563', 'f67c5f', 'f65e3b', 'edcf72', 'edcc61', 'edc850', 'edc53f', 'edc53f', '3c3a32'];
@@ -750,6 +782,7 @@ var newWall = function (wall_val) {
   game.div.appendChild(cell.div);
   cells.push(cell);
   cell.setValue(wall_val);//Math.max(1, game.cur_wall_val + Math.floor(Math.random()*4) - 2));
+   //cell.div.addEventListener('click', function () { bird.setValue(cell.value + 1); });
   maxlen = Math.max(maxlen, cell.vs.length);
   if ((cell.y <= 0) && (cells.length >= 4)) {
    break;
@@ -1058,7 +1091,7 @@ var oef = function () {
           for (var j = cells.length-1; j>=0; j--) {
            var cell = cells[j];
            var dy = Math.abs(cell.y - bird.y);
-           if (dy < cly) { // no death && cell.value == dest_value) {
+           if (dy < cly) { // && cell.value == dest_value) {
             cly = dy;
             clc = cell;
             wall.clc = clc;
@@ -1079,7 +1112,9 @@ var oef = function () {
           clm = false;
           flamt = .4;
           flrt = .4;
-           break; // remove for no death
+          if (!no_death) {
+            break; // remove for no death
+          }
          }
         }
        }
@@ -1129,7 +1164,7 @@ var oef = function () {
          bird.vy = 0;
         }
         touching_wall = true;
-        if (clc.value != dest_value) {
+        if (clc.value != dest_value && !no_death) {
          punch.play();
          bird.vy = -10;
          game.ended = true;
@@ -1215,14 +1250,15 @@ var oef = function () {
 
     var mxy = hh - 0 - (cell_size + 12*2);
     
-/*    if (bird.y > mxy) {
+     // remove for no death
+    if (bird.y > mxy && !no_death) {
      if (!gclm) {
       punch.play();
       bird.vy = -10;
       game.ended = true;
      }
     }
-    */
+    
     
     if (game.ended) { // •••• you have to implement this. when the game is over, this is set to true.
      game.end_fr = 0;
